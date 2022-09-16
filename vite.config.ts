@@ -1,49 +1,70 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import * as path from "path";
-import {
-  createStyleImportPlugin,
-  ElementPlusResolve,
-} from "vite-plugin-style-import";
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
+import type { UserConfig, ConfigEnv, ProxyOptions } from 'vite';
+import { isProd, loadEnv } from './src/utils/vite';
+import { svgBuilder } from './src/components/icon/svg/index';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  resolve: {
-    //设置别名
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
-  },
-  plugins: [
-    vue(),
-    createStyleImportPlugin({
-      resolves: [ElementPlusResolve()],
-      libs: [
-        // 如果没有你需要的resolve，可以在lib内直接写，也可以给我们提供PR
-        {
-          libraryName: "element-plus",
-          esModule: true,
-          resolveStyle: (name) => {
-            return `element-plus/lib/theme-chalk/${name}.css`;
-          },
-          ensureStyleFile: true, // 忽略文件是否存在, 导入不存在的CSS文件时防止错误。
-        },
-      ],
-    }),
-  ],
-  server: {
-    port: 8080,
-    hmr: {
-      host: "127.0.0.1",
-      port: 8080,
-    },
-    // 本地代理
-    proxy: {
-      "/api": {
-        target: "your https address",
+const pathResolve = (dir: string): any => {
+  return resolve(__dirname, '.', dir);
+};
+
+// https://vitejs.cn/config/
+const viteConfig = ({ mode }: ConfigEnv): UserConfig => {
+  const { VITE_PORT, VITE_OPEN, VITE_BASE_PATH, VITE_OUT_DIR, VITE_PROXY_URL } =
+    loadEnv(mode);
+
+  const alias: Record<string, string> = {
+    '@': pathResolve('./src'),
+    assets: pathResolve('./src/assets'),
+    'vue-i18n': isProd(mode)
+      ? 'vue-i18n/dist/vue-i18n.cjs.prod.js'
+      : 'vue-i18n/dist/vue-i18n.cjs.js',
+  };
+
+  let proxy: Record<string, string | ProxyOptions> = {};
+  if (VITE_PROXY_URL) {
+    proxy = {
+      '/index.php': {
+        target: VITE_PROXY_URL,
         changeOrigin: true,
-        rewrite: (path: string) => path.replace(/^\/api/, ""),
+      },
+    };
+  }
+
+  return {
+    plugins: [vue(), svgBuilder('./src/assets/icons/')],
+    root: process.cwd(),
+    resolve: { alias },
+    base: VITE_BASE_PATH,
+    server: {
+      host: '0.0.0.0',
+      port: VITE_PORT,
+      open: VITE_OPEN,
+      proxy: proxy,
+    },
+    build: {
+      sourcemap: false,
+      outDir: VITE_OUT_DIR,
+      emptyOutDir: true,
+      chunkSizeWarningLimit: 1500,
+    },
+    css: {
+      postcss: {
+        plugins: [
+          {
+            postcssPlugin: 'internal:charset-removal',
+            AtRule: {
+              charset: (atRule) => {
+                if (atRule.name === 'charset') {
+                  atRule.remove();
+                }
+              },
+            },
+          },
+        ],
       },
     },
-  },
-});
+  };
+};
+
+export default viteConfig;

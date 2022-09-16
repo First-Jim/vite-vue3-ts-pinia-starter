@@ -1,30 +1,30 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/login',
-    name: 'Login',
-    meta: {
-      title: '登录',
-      keepAlive: true,
-      requireAuth: false
-    },
-    component: () => import('@/pages/VueUse.vue')
-  },
-  {
-    path: '/',
-    name: 'Index',
-    meta: {
-      title: 'usePinia',
-      keepAlive: true,
-      requireAuth: true
-    },
-    component: () => import('@/pages/usePinia.vue')
-  }
-]
+import { createRouter, createWebHashHistory } from 'vue-router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { staticRoutes } from '@/router/static';
+import { loading } from '@/utils/loading';
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+  history: createWebHashHistory(),
+  routes: staticRoutes,
 });
+
+router.beforeEach((to, from, next) => {
+  NProgress.configure({ showSpinner: false });
+  NProgress.start();
+  if (!window.existLoading) {
+    loading.show();
+    window.existLoading = true;
+  }
+  next();
+});
+
+// 路由加载后
+router.afterEach(() => {
+  if (window.existLoading) {
+    loading.hide();
+  }
+  NProgress.done();
+});
+
 export default router;
