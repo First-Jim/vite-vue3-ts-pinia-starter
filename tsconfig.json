@@ -5,6 +5,7 @@
 			"src/types"
 		],
 		"target": "esnext",
+		"allowJs": false,
 		"useDefineForClassFields": false,
 		"noImplicitAny": false, //允许any 类型
 		"module": "esnext",
@@ -13,19 +14,20 @@
 		"strict": false,
 		"jsx": "preserve",
 		"sourceMap": true,
-		"skipLibCheck": true,
+		"skipLibCheck": false,
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
-		"lib": ["esnext", "dom"],
+		"allowSyntheticDefaultImports": true,
+		"lib": ["esnext", "DOM.Iterable", "dom"],
 		"isolatedModules": false, //build 报错
 		"baseUrl": "./",
 		"declaration": true,
 		"paths": {
-			// "@": ["src"],
-			"@/*": ["src/*"]
+			"@/*": ["./src/*"]
 		},
 		"types": ["element-plus/global"]
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	// "references": [{ "path": "./tsconfig.node.json" }],
 	"exclude": ["node_modules"]
 }

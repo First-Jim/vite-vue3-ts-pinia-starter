@@ -5,7 +5,7 @@
 	"description": "An out-of-box UI solution for enterprise applications",
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
+		"build": "vite build",
 		"preview": "vite preview",
 		"eslint:comment": "使用 ESLint 检查并自动修复 src 目录下所有扩展名为 .js 和 .vue 的文件",
 		"eslint": "eslint --ext .js,.jsx,.ts,.vue --ignore-path .gitignore --fix src",

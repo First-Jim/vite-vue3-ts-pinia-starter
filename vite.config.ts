@@ -14,8 +14,8 @@ const viteConfig = ({ mode, command }: ConfigEnv): UserConfig => {
 	const { VITE_PORT, VITE_OPEN, VITE_BASE_PATH, VITE_OUT_DIR, VITE_PROXY_URL } = loadEnv(mode);
 
 	const alias: Record<string, string> = {
-		'@': pathResolve('./src'),
-		assets: pathResolve('./src/assets'),
+		'@': pathResolve('src'),
+		assets: pathResolve('src/assets'),
 		'vue-i18n': isProd(mode) ? 'vue-i18n/dist/vue-i18n.cjs.prod.js' : 'vue-i18n/dist/vue-i18n.cjs.js',
 	};
 
@@ -40,7 +40,10 @@ const viteConfig = ({ mode, command }: ConfigEnv): UserConfig => {
 			}),
 		],
 		root: process.cwd(),
-		resolve: { alias },
+		resolve: {
+			alias,
+			extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
+		},
 		base: VITE_BASE_PATH,
 		server: {
 			host: '0.0.0.0',
