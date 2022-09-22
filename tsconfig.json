@@ -1,30 +1,31 @@
 {
-  "compilerOptions": {
-    "typeRoots": [
-      "node_modules/@types", // 默认值
-      "src/types"
-    ],
-    "target": "esnext",
-    "useDefineForClassFields": false,
-    "noImplicitAny": false, //允许any 类型
-    "module": "esnext",
-    "moduleResolution": "node",
-    "removeComments": false,
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "isolatedModules": true, //build 报错
-    "baseUrl": "./",
-    "paths": {
-      // "@": ["src"],
-      "@/*": ["src/*"]
-    },
-    "types": ["element-plus/global"]
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"typeRoots": [
+			"node_modules/@types", // 默认值
+			"src/types"
+		],
+		"target": "esnext",
+		"useDefineForClassFields": false,
+		"noImplicitAny": false, //允许any 类型
+		"module": "esnext",
+		"moduleResolution": "node",
+		"removeComments": false,
+		"strict": false,
+		"jsx": "preserve",
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"lib": ["esnext", "dom"],
+		"isolatedModules": false, //build 报错
+		"baseUrl": "./",
+		"declaration": true,
+		"paths": {
+			// "@": ["src"],
+			"@/*": ["src/*"]
+		},
+		"types": ["element-plus/global"]
+	},
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"exclude": ["node_modules"]
 }

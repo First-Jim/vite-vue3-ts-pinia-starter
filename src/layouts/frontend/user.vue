@@ -1,5 +1,5 @@
 <template>
-  <component :is="memberCenter.state.layoutMode"></component>
+	<component :is="memberCenter.state.layoutMode"></component>
 </template>
 
 <script setup lang="ts">
@@ -7,11 +7,7 @@ import { onMounted } from 'vue';
 import { useUserInfo } from '@/stores/userInfo';
 import { useMemberCenter } from '@/stores/memberCenter';
 import { index } from '@/api/frontend/user/index';
-import {
-  handleMemberCenterRoute,
-  getMenuPaths,
-  getFirstRoute,
-} from '@/utils/router';
+import { handleMemberCenterRoute, getMenuPaths, getFirstRoute } from '@/utils/router';
 import { memberCenterBaseRoute } from '@/router/static';
 import { ElNotification } from 'element-plus';
 import { useI18n } from 'vue-i18n';
@@ -24,54 +20,50 @@ const userInfo = useUserInfo();
 const memberCenter = useMemberCenter();
 
 onBeforeRouteUpdate((to) => {
-  memberCenter.setActiveRoute(to);
+	memberCenter.setActiveRoute(to);
 });
 
 onMounted(() => {
-  if (!userInfo.token) return router.push({ name: 'userLogin' });
+	if (!userInfo.token) return router.push({ name: 'userLogin' });
 
-  index().then((res) => {
-    res.data.userInfo.refreshToken = userInfo.refreshToken;
-    userInfo.dataFill(res.data.userInfo);
-    if (res.data.menus) {
-      handleMemberCenterRoute(res.data.menus);
+	index().then((res) => {
+		res.data.userInfo.refreshToken = userInfo.refreshToken;
+		userInfo.dataFill(res.data.userInfo);
+		if (res.data.menus) {
+			handleMemberCenterRoute(res.data.menus);
 
-      // 预跳转到上次路径
-      if (
-        route.query &&
-        route.query.url &&
-        route.query.url != memberCenterBaseRoute.path
-      ) {
-        // 检查路径是否有权限
-        let menuPaths = getMenuPaths(memberCenter.state.viewRoutes);
-        if (menuPaths.indexOf(route.query.url as string) !== -1) {
-          let query = JSON.parse(route.query.query as string);
-          router.push({
-            path: route.query.url as string,
-            query: Object.keys(query).length ? query : {},
-          });
-          return;
-        }
-      }
+			// 预跳转到上次路径
+			if (route.query && route.query.url && route.query.url != memberCenterBaseRoute.path) {
+				// 检查路径是否有权限
+				let menuPaths = getMenuPaths(memberCenter.state.viewRoutes);
+				if (menuPaths.indexOf(route.query.url as string) !== -1) {
+					let query = JSON.parse(route.query.query as string);
+					router.push({
+						path: route.query.url as string,
+						query: Object.keys(query).length ? query : {},
+					});
+					return;
+				}
+			}
 
-      // 跳转到第一个菜单
-      let firstRoute = getFirstRoute(memberCenter.state.viewRoutes);
-      if (firstRoute) {
-        router.push({ path: firstRoute.path });
-      } else {
-        ElNotification({
-          type: 'error',
-          message: t('No route found to jump~'),
-        });
-      }
-    }
-  });
+			// 跳转到第一个菜单
+			let firstRoute = getFirstRoute(memberCenter.state.viewRoutes);
+			if (firstRoute) {
+				router.push({ path: firstRoute.path });
+			} else {
+				ElNotification({
+					type: 'error',
+					message: t('No route found to jump~'),
+				});
+			}
+		}
+	});
 
-  if (document.body.clientWidth < 1024) {
-    memberCenter.setShrink(true);
-  } else {
-    memberCenter.setShrink(false);
-  }
+	if (document.body.clientWidth < 1024) {
+		memberCenter.setShrink(true);
+	} else {
+		memberCenter.setShrink(false);
+	}
 });
 </script>
 
@@ -80,7 +72,7 @@ onMounted(() => {
 import Default from '@/layouts/frontend/container/default.vue';
 import Disable from '@/layouts/frontend/container/disable.vue';
 export default {
-  components: { Default, Disable },
+	components: { Default, Disable },
 };
 </script>
 

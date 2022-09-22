@@ -1,95 +1,47 @@
 <template>
-  <el-header class="header">
-    <el-row justify="center">
-      <el-col class="header-row" :span="16" :xs="24">
-        <div
-          :class="userInfo.id > 0 ? 'hidden-sm-and-down' : ''"
-          @click="router.push({ name: '/' })"
-          class="header-logo"
-        >
-          <img src="~assets/logo.png" />
-          <span class="hidden-xs-only">{{ siteConfig.site_name }}</span>
-        </div>
-        <div
-          v-if="userInfo.id > 0"
-          @click="memberCenter.toggleMenuExpand(true)"
-          class="user-menus-expand hidden-md-and-up"
-        >
-          <Icon name="fa fa-indent" color="var(--el-color-primary)" size="20" />
-        </div>
-        <el-menu
-          :default-active="state.activeMenu"
-          class="frontend-header-menu"
-          mode="horizontal"
-          :ellipsis="false"
-        >
-          <el-menu-item
-            @click="router.push({ name: '/' })"
-            v-blur
-            index="index"
-            >{{ $t('index.index') }}</el-menu-item
-          >
+	<el-header class="header">
+		<el-row justify="center">
+			<el-col class="header-row" :span="16" :xs="24">
+				<div :class="userInfo.id > 0 ? 'hidden-sm-and-down' : ''" @click="router.push({ name: '/' })" class="header-logo">
+					<img src="~assets/logo.png" />
+					<span class="hidden-xs-only">{{ siteConfig.site_name }}</span>
+				</div>
+				<div v-if="userInfo.id > 0" @click="memberCenter.toggleMenuExpand(true)" class="user-menus-expand hidden-md-and-up">
+					<Icon name="fa fa-indent" color="var(--el-color-primary)" size="20" />
+				</div>
+				<el-menu :default-active="state.activeMenu" class="frontend-header-menu" mode="horizontal" :ellipsis="false">
+					<el-menu-item @click="router.push({ name: '/' })" v-blur index="index">{{ $t('index.index') }}</el-menu-item>
 
-          <template v-if="memberCenter.state.open">
-            <el-sub-menu v-if="userInfo.id" v-blur index="user">
-              <template #title>
-                <div class="header-user-box">
-                  <img
-                    class="header-user-avatar"
-                    :src="userInfo.avatar"
-                    alt=""
-                  />
-                  {{ userInfo.nickname }}
-                </div>
-              </template>
-              <el-menu-item
-                @click="router.push({ name: 'user' })"
-                v-blur
-                index="user-index"
-                >{{ $t('index.Member Center') }}</el-menu-item
-              >
-              <el-menu-item
-                @click="userInfo.logout()"
-                v-blur
-                index="user-logout"
-                >{{ $t('user.user.Logout login') }}</el-menu-item
-              >
-            </el-sub-menu>
-            <el-menu-item
-              v-else
-              @click="router.push({ name: 'user' })"
-              v-blur
-              index="user"
-              >{{ $t('index.Member Center') }}</el-menu-item
-            >
-          </template>
+					<template v-if="memberCenter.state.open">
+						<el-sub-menu v-if="userInfo.id" v-blur index="user">
+							<template #title>
+								<div class="header-user-box">
+									<img class="header-user-avatar" :src="userInfo.avatar" alt="" />
+									{{ userInfo.nickname }}
+								</div>
+							</template>
+							<el-menu-item @click="router.push({ name: 'user' })" v-blur index="user-index">{{ $t('index.Member Center') }}</el-menu-item>
+							<el-menu-item @click="userInfo.logout()" v-blur index="user-logout">{{ $t('user.user.Logout login') }}</el-menu-item>
+						</el-sub-menu>
+						<el-menu-item v-else @click="router.push({ name: 'user' })" v-blur index="user">{{ $t('index.Member Center') }}</el-menu-item>
+					</template>
 
-          <el-sub-menu v-blur index="switch-language">
-            <template #title>{{ $t('index.language') }}</template>
-            <el-menu-item
-              @click="editDefaultLang(item.name)"
-              v-for="item in config.lang.langArray"
-              :key="item.name"
-              :index="'switch-language-' + item.value"
-              >{{ item.value }}</el-menu-item
-            >
-          </el-sub-menu>
-          <el-menu-item index="theme-switch" class="theme-switch">
-            <DarkSwitch @click="toggleDark()" />
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-    </el-row>
-    <el-drawer
-      custom-class="aside-drawer"
-      v-model="memberCenter.state.menuExpand"
-      :with-header="false"
-      direction="ltr"
-      size="50%"
-    >
-      <Aside />
-    </el-drawer>
-  </el-header>
+					<el-sub-menu v-blur index="switch-language">
+						<template #title>{{ $t('index.language') }}</template>
+						<el-menu-item @click="editDefaultLang(item.name)" v-for="item in config.lang.langArray" :key="item.name" :index="'switch-language-' + item.value">{{
+							item.value
+						}}</el-menu-item>
+					</el-sub-menu>
+					<el-menu-item index="theme-switch" class="theme-switch">
+						<DarkSwitch @click="toggleDark()" />
+					</el-menu-item>
+				</el-menu>
+			</el-col>
+		</el-row>
+		<el-drawer custom-class="aside-drawer" v-model="memberCenter.state.menuExpand" :with-header="false" direction="ltr" size="50%">
+			<Aside />
+		</el-drawer>
+	</el-header>
 </template>
 
 <script setup lang="ts">
@@ -109,7 +61,7 @@ import DarkSwitch from '@/layouts/common/components/darkSwitch.vue';
 import toggleDark from '@/utils/useDark';
 
 const state = reactive({
-  activeMenu: '',
+	activeMenu: '',
 });
 
 const route = useRoute();
@@ -120,12 +72,12 @@ const siteConfig = useSiteConfig();
 const memberCenter = useMemberCenter();
 
 switch (route.name) {
-  case '/':
-    state.activeMenu = '';
-    break;
-  case 'userLogin':
-    state.activeMenu = 'user';
-    break;
+	case '/':
+		state.activeMenu = '';
+		break;
+	case 'userLogin':
+		state.activeMenu = 'user';
+		break;
 }
 
 index();
@@ -133,89 +85,89 @@ index();
 
 <style scoped lang="scss">
 .header {
-  background-color: var(--ba-bg-color-overlay);
-  box-shadow: 0 0 8px rgba(0 0 0 / 8%);
+	background-color: var(--ba-bg-color-overlay);
+	box-shadow: 0 0 8px rgba(0 0 0 / 8%);
 }
 .el-header {
-  padding: 0;
+	padding: 0;
 }
 .header-row {
-  display: flex;
+	display: flex;
 }
 .user-menus-expand {
-  display: flex;
-  height: 60px;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	height: 60px;
+	align-items: center;
+	justify-content: center;
 }
 .header-logo {
-  display: flex;
-  height: 60px;
-  align-items: center;
-  cursor: pointer;
-  img {
-    height: 34px;
-    width: 34px;
-  }
-  span {
-    padding-left: 4px;
-    font-size: var(--el-font-size-large);
-  }
+	display: flex;
+	height: 60px;
+	align-items: center;
+	cursor: pointer;
+	img {
+		height: 34px;
+		width: 34px;
+	}
+	span {
+		padding-left: 4px;
+		font-size: var(--el-font-size-large);
+	}
 }
 .switch-language {
-  display: flex;
-  align-items: center;
-  span {
-    padding-right: 4px;
-  }
+	display: flex;
+	align-items: center;
+	span {
+		padding-right: 4px;
+	}
 }
 .el-menu--horizontal {
-  margin-left: auto;
-  border-bottom: none;
+	margin-left: auto;
+	border-bottom: none;
 }
 .header-user-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .header-user-avatar {
-  width: 16px;
-  height: 16px;
-  margin-right: 4px;
-  border-radius: 50%;
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	border-radius: 50%;
 }
 .el-menu--horizontal > .el-menu-item,
 .el-menu--horizontal > :deep(.el-sub-menu) .el-sub-menu__title,
 .el-menu--horizontal > .el-menu-item.is-active {
-  border-bottom: none;
+	border-bottom: none;
 }
 :deep(.aside-drawer) {
-  .el-drawer__body {
-    padding: 0;
-  }
+	.el-drawer__body {
+		padding: 0;
+	}
 }
 @media only screen and (max-width: 768px) {
-  .header-logo {
-    padding-left: 10px;
-  }
-  .user-menus-expand {
-    padding-left: 20px;
-  }
+	.header-logo {
+		padding-left: 10px;
+	}
+	.user-menus-expand {
+		padding-left: 20px;
+	}
 }
 @media screen and (max-width: 425px) {
-  :deep(.aside-drawer) {
-    width: 70% !important;
-  }
+	:deep(.aside-drawer) {
+		width: 70% !important;
+	}
 }
 .theme-switch {
-  --el-menu-hover-bg-color: none;
+	--el-menu-hover-bg-color: none;
 }
 
 @at-root .dark {
-  .header-logo {
-    .hidden-xs-only {
-      color: var(--el-text-color-primary);
-    }
-  }
+	.header-logo {
+		.hidden-xs-only {
+			color: var(--el-text-color-primary);
+		}
+	}
 }
 </style>

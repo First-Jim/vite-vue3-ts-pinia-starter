@@ -5,26 +5,26 @@ import { staticRoutes } from '@/router/static';
 import { loading } from '@/utils/loading';
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes: staticRoutes,
+	history: createWebHashHistory(),
+	routes: staticRoutes,
 });
 
 router.beforeEach((to, from, next) => {
-  NProgress.configure({ showSpinner: false });
-  NProgress.start();
-  if (!window.existLoading) {
-    loading.show();
-    window.existLoading = true;
-  }
-  next();
+	NProgress.configure({ showSpinner: false });
+	NProgress.start();
+	if (!window.existLoading) {
+		loading.show();
+		window.existLoading = true;
+	}
+	next();
 });
 
 // 路由加载后
 router.afterEach(() => {
-  if (window.existLoading) {
-    loading.hide();
-  }
-  NProgress.done();
+	if (window.existLoading) {
+		loading.hide();
+	}
+	NProgress.done();
 });
 
 export default router;

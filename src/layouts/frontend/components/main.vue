@@ -1,11 +1,11 @@
 <template>
-  <el-main class="layout-main">
-    <router-view v-slot="{ Component }">
-      <transition :name="config.layout.mainAnimation" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-  </el-main>
+	<el-main class="layout-main">
+		<router-view v-slot="{ Component }">
+			<transition :name="config.layout.mainAnimation" mode="out-in">
+				<component :is="Component" />
+			</transition>
+		</router-view>
+	</el-main>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +16,7 @@ const config = useConfig();
 
 <style scoped lang="scss">
 .layout-main {
-  padding: 0 !important;
-  overflow-x: hidden;
+	padding: 0 !important;
+	overflow-x: hidden;
 }
 </style>

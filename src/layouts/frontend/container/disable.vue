@@ -1,19 +1,15 @@
 <template>
-  <el-container class="is-vertical">
-    <Header />
-    <el-scrollbar :style="layoutMainScrollbarStyle()" ref="mainScrollbarRef">
-      <el-row class="frontend-footer-brother" justify="center">
-        <el-col class="user-layouts" :span="16" :xs="24">
-          <el-alert
-            :center="true"
-            :title="$t('user.user.Member center disabled')"
-            type="error"
-          />
-        </el-col>
-      </el-row>
-      <Footer />
-    </el-scrollbar>
-  </el-container>
+	<el-container class="is-vertical">
+		<Header />
+		<el-scrollbar :style="layoutMainScrollbarStyle()" ref="mainScrollbarRef">
+			<el-row class="frontend-footer-brother" justify="center">
+				<el-col class="user-layouts" :span="16" :xs="24">
+					<el-alert :center="true" :title="$t('user.user.Member center disabled')" type="error" />
+				</el-col>
+			</el-row>
+			<Footer />
+		</el-scrollbar>
+	</el-container>
 </template>
 
 <script setup lang="ts">
@@ -25,13 +21,13 @@ import 'element-plus/theme-chalk/display.css';
 
 <style scoped lang="scss">
 .user-layouts {
-  display: flex;
-  padding-top: 15px;
-  align-items: flex-start;
+	display: flex;
+	padding-top: 15px;
+	align-items: flex-start;
 }
 @media screen and (max-width: 768px) {
-  .user-layouts {
-    padding-top: 0;
-  }
+	.user-layouts {
+		padding-top: 0;
+	}
 }
 </style>

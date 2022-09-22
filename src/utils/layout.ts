@@ -9,22 +9,22 @@ import { isAdminApp } from '@/utils/common';
  * @returns CSSProperties
  */
 export function mainHeight(extra = 0): CSSProperties {
-  let height = extra;
-  const adminLayoutMainExtraHeight: anyObj = {
-    Default: 70,
-    Classic: 50,
-    Streamline: 60,
-  };
-  if (isAdminApp()) {
-    const config = useConfig();
-    const navTabs = useNavTabs();
-    if (!navTabs.state.tabFullScreen) {
-      height += adminLayoutMainExtraHeight[config.layout.layoutMode];
-    }
-  } else {
-    height += 60;
-  }
-  return {
-    height: 'calc(100vh - ' + height.toString() + 'px)',
-  };
+	let height = extra;
+	const adminLayoutMainExtraHeight: anyObj = {
+		Default: 70,
+		Classic: 50,
+		Streamline: 60,
+	};
+	if (isAdminApp()) {
+		const config = useConfig();
+		const navTabs = useNavTabs();
+		if (!navTabs.state.tabFullScreen) {
+			height += adminLayoutMainExtraHeight[config.layout.layoutMode];
+		}
+	} else {
+		height += 60;
+	}
+	return {
+		height: 'calc(100vh - ' + height.toString() + 'px)',
+	};
 }

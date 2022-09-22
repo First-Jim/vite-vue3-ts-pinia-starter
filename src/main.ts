@@ -4,9 +4,11 @@ import store from '@/stores';
 import router from '@/router';
 import { loadLang } from '@/lang/index';
 import { registerIcons } from '@/utils/common';
+import 'tailwindcss/tailwind.css';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import '@/styles/index.scss';
+
 // 创建vue实例
 const app = createApp(App);
 

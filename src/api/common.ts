@@ -30,12 +30,12 @@ export const apiAreaUrl = '/api/ajax/area';
  * 上传文件
  */
 export function fileUpload(fd: FormData, params: anyObj = {}): ApiPromise {
-  return createAxios({
-    url: isAdminApp() ? adminUploadUrl : apiUploadUrl,
-    method: 'POST',
-    data: fd,
-    params: params,
-  }) as ApiPromise;
+	return createAxios({
+		url: isAdminApp() ? adminUploadUrl : apiUploadUrl,
+		method: 'POST',
+		data: fd,
+		params: params,
+	}) as ApiPromise;
 }
 
 /**
@@ -44,213 +44,192 @@ export function fileUpload(fd: FormData, params: anyObj = {}): ApiPromise {
  * @param background 背景色,如:rgb(255,255,255)
  */
 export function buildSuffixSvgUrl(suffix: string, background = '') {
-  const adminInfo = useAdminInfo();
-  return (
-    getUrl() +
-    (isAdminApp() ? adminBuildSuffixSvgUrl : apiBuildSuffixSvgUrl) +
-    '?batoken=' +
-    adminInfo.getToken() +
-    '&suffix=' +
-    suffix +
-    (background ? '&background=' + background : '') +
-    '&server=1'
-  );
+	const adminInfo = useAdminInfo();
+	return (
+		getUrl() +
+		(isAdminApp() ? adminBuildSuffixSvgUrl : apiBuildSuffixSvgUrl) +
+		'?batoken=' +
+		adminInfo.getToken() +
+		'&suffix=' +
+		suffix +
+		(background ? '&background=' + background : '') +
+		'&server=1'
+	);
 }
 
 /**
  * 获取地区数据
  */
 export function getArea(values: number[]) {
-  const params: { province?: number; city?: number } = {};
-  if (values[0]) {
-    params.province = values[0];
-  }
-  if (values[1]) {
-    params.city = values[1];
-  }
-  return createAxios({
-    url: isAdminApp() ? adminAreaUrl : apiAreaUrl,
-    method: 'GET',
-    params: params,
-  });
+	const params: { province?: number; city?: number } = {};
+	if (values[0]) {
+		params.province = values[0];
+	}
+	if (values[1]) {
+		params.city = values[1];
+	}
+	return createAxios({
+		url: isAdminApp() ? adminAreaUrl : apiAreaUrl,
+		method: 'GET',
+		params: params,
+	});
 }
 
 /*
  * 缓存清理接口
  */
 export function postClearCache(type: string) {
-  return createAxios(
-    {
-      url: clearCacheUrl,
-      method: 'POST',
-      data: {
-        type: type,
-      },
-    },
-    {
-      showSuccessMessage: true,
-    },
-  );
+	return createAxios(
+		{
+			url: clearCacheUrl,
+			method: 'POST',
+			data: {
+				type: type,
+			},
+		},
+		{
+			showSuccessMessage: true,
+		},
+	);
 }
 
 /**
  * 构建命令执行窗口url
  */
-export function buildTerminalUrl(
-  commandKey: string,
-  uuid: string,
-  extend: string,
-) {
-  const adminInfo = useAdminInfo();
-  return (
-    getUrl() +
-    terminalUrl +
-    '?command=' +
-    commandKey +
-    '&uuid=' +
-    uuid +
-    '&extend=' +
-    extend +
-    '&batoken=' +
-    adminInfo.getToken() +
-    '&server=1'
-  );
+export function buildTerminalUrl(commandKey: string, uuid: string, extend: string) {
+	const adminInfo = useAdminInfo();
+	return getUrl() + terminalUrl + '?command=' + commandKey + '&uuid=' + uuid + '&extend=' + extend + '&batoken=' + adminInfo.getToken() + '&server=1';
 }
 
 /**
  * 请求修改终端配置
  */
-export function postChangeTerminalConfig(data: {
-  manager?: string;
-  port?: string;
-}): ApiPromise {
-  return createAxios(
-    {
-      url: changeTerminalConfigUrl,
-      method: 'POST',
-      data: data,
-    },
-    {
-      loading: true,
-    },
-  ) as ApiPromise;
+export function postChangeTerminalConfig(data: { manager?: string; port?: string }): ApiPromise {
+	return createAxios(
+		{
+			url: changeTerminalConfigUrl,
+			method: 'POST',
+			data: data,
+		},
+		{
+			loading: true,
+		},
+	) as ApiPromise;
 }
 
 /**
  * 远程下拉框数据获取
  */
 export function getSelectData(remoteUrl: string, q: string, params: {}) {
-  return createAxios({
-    url: remoteUrl,
-    method: 'get',
-    params: Object.assign(params, {
-      select: true,
-      quick_search: q,
-    }),
-  });
+	return createAxios({
+		url: remoteUrl,
+		method: 'get',
+		params: Object.assign(params, {
+			select: true,
+			quick_search: q,
+		}),
+	});
 }
 
 export function buildCaptchaUrl() {
-  return getUrl() + captchaUrl + '?server=1';
+	return getUrl() + captchaUrl + '?server=1';
 }
 
 export function getTablePk(table: string) {
-  return createAxios({
-    url: getTablePkUrl,
-    method: 'get',
-    params: {
-      table: table,
-    },
-  });
+	return createAxios({
+		url: getTablePkUrl,
+		method: 'get',
+		params: {
+			table: table,
+		},
+	});
 }
 
 export function refreshToken(): ApiPromise {
-  const adminInfo = useAdminInfo();
-  const userInfo = useUserInfo();
-  return createAxios({
-    url: refreshTokenUrl,
-    method: 'POST',
-    data: {
-      refresh_token: isAdminApp()
-        ? adminInfo.getToken('refresh')
-        : userInfo.getToken('refresh'),
-    },
-  }) as ApiPromise;
+	const adminInfo = useAdminInfo();
+	const userInfo = useUserInfo();
+	return createAxios({
+		url: refreshTokenUrl,
+		method: 'POST',
+		data: {
+			refresh_token: isAdminApp() ? adminInfo.getToken('refresh') : userInfo.getToken('refresh'),
+		},
+	}) as ApiPromise;
 }
 
 /**
  * 生成一个控制器的：增、删、改、查、排序的操作url
  */
 export class baTableApi {
-  private controllerUrl;
-  public actionUrl;
+	private controllerUrl;
+	public actionUrl;
 
-  constructor(controllerUrl: string) {
-    this.controllerUrl = controllerUrl;
-    this.actionUrl = new Map([
-      ['index', controllerUrl + 'index'],
-      ['add', controllerUrl + 'add'],
-      ['edit', controllerUrl + 'edit'],
-      ['del', controllerUrl + 'del'],
-      ['sortable', controllerUrl + 'sortable'],
-    ]);
-  }
+	constructor(controllerUrl: string) {
+		this.controllerUrl = controllerUrl;
+		this.actionUrl = new Map([
+			['index', controllerUrl + 'index'],
+			['add', controllerUrl + 'add'],
+			['edit', controllerUrl + 'edit'],
+			['del', controllerUrl + 'del'],
+			['sortable', controllerUrl + 'sortable'],
+		]);
+	}
 
-  index(filter: anyObj = {}): ApiPromise<TableDefaultData> {
-    return createAxios({
-      url: this.actionUrl.get('index'),
-      method: 'get',
-      params: filter,
-    }) as ApiPromise;
-  }
+	index(filter: anyObj = {}): ApiPromise<TableDefaultData> {
+		return createAxios({
+			url: this.actionUrl.get('index'),
+			method: 'get',
+			params: filter,
+		}) as ApiPromise;
+	}
 
-  edit(params: anyObj) {
-    return createAxios({
-      url: this.actionUrl.get('edit'),
-      method: 'get',
-      params: params,
-    });
-  }
+	edit(params: anyObj) {
+		return createAxios({
+			url: this.actionUrl.get('edit'),
+			method: 'get',
+			params: params,
+		});
+	}
 
-  del(ids: string[]) {
-    return createAxios(
-      {
-        url: this.actionUrl.get('del'),
-        method: 'DELETE',
-        data: {
-          ids: ids,
-        },
-      },
-      {
-        showSuccessMessage: true,
-      },
-    );
-  }
+	del(ids: string[]) {
+		return createAxios(
+			{
+				url: this.actionUrl.get('del'),
+				method: 'DELETE',
+				data: {
+					ids: ids,
+				},
+			},
+			{
+				showSuccessMessage: true,
+			},
+		);
+	}
 
-  postData(action: string, data: anyObj) {
-    if (!this.actionUrl.has(action)) {
-      throw new Error('action 不存在！');
-    }
-    return createAxios(
-      {
-        url: this.actionUrl.get(action),
-        method: 'post',
-        data: data,
-      },
-      {
-        showSuccessMessage: true,
-      },
-    );
-  }
+	postData(action: string, data: anyObj) {
+		if (!this.actionUrl.has(action)) {
+			throw new Error('action 不存在！');
+		}
+		return createAxios(
+			{
+				url: this.actionUrl.get(action),
+				method: 'post',
+				data: data,
+			},
+			{
+				showSuccessMessage: true,
+			},
+		);
+	}
 
-  sortableApi(id: number, targetId: number) {
-    return createAxios({
-      url: this.actionUrl.get('sortable'),
-      method: 'post',
-      data: {
-        id: id,
-        targetId: targetId,
-      },
-    });
-  }
+	sortableApi(id: number, targetId: number) {
+		return createAxios({
+			url: this.actionUrl.get('sortable'),
+			method: 'post',
+			data: {
+				id: id,
+				targetId: targetId,
+			},
+		});
+	}
 }

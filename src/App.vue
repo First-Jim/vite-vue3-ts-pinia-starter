@@ -1,7 +1,7 @@
 <template>
-  <el-config-provider :locale="lang">
-    <router-view></router-view>
-  </el-config-provider>
+	<el-config-provider :locale="lang">
+		<router-view></router-view>
+	</el-config-provider>
 </template>
 <script setup lang="ts">
 import { onMounted, watch } from 'vue';
@@ -19,9 +19,9 @@ const lang = getLocaleMessage(config.lang.defaultLang) as any;
 
 // 监听路由变化时更新浏览器标题
 watch(
-  () => route.path,
-  () => {
-    setTitleFromRoute();
-  },
+	() => route.path,
+	() => {
+		setTitleFromRoute();
+	},
 );
 </script>
