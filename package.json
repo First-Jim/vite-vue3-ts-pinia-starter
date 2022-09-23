@@ -12,7 +12,7 @@
 		"commit:comment": "引导设置规范化的提交信息",
 		"commit": "git-cz",
 		"prettier:comment": "自动格式化当前目录下的所有文件",
-		"prettier": "prettier --write .",
+		"prettier": "rm -rf dist && prettier --write .",
 		"prepare": "husky install"
 	},
 	"config": {

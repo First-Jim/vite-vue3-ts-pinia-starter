@@ -69,10 +69,10 @@ module.exports = {
 		'no-sparse-arrays': 'off',
 		'no-prototype-builtins': 'off',
 		'no-use-before-define': 'off',
+
 		'no-case-declarations': 'off',
 		'no-console': 'off',
 		'vue/html-indent': 'off',
-		indent: [1, 4, { SwitchCase: 1 }],
 	},
 	globals: {
 		window: true,

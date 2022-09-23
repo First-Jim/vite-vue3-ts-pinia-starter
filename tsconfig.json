@@ -20,8 +20,8 @@
 		"allowSyntheticDefaultImports": true,
 		"lib": ["esnext", "DOM.Iterable", "dom"],
 		"isolatedModules": false, //build 报错
-		"baseUrl": "./",
 		"declaration": true,
+		"baseUrl": "./",
 		"paths": {
 			"@/*": ["./src/*"]
 		},

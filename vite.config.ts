@@ -6,7 +6,7 @@ import { isProd, loadEnv } from './src/utils/vite';
 import { svgBuilder } from './src/components/icon/svg/index';
 
 const pathResolve = (dir: string): any => {
-	return resolve(__dirname, '.', dir);
+	return resolve(__dirname, './', dir);
 };
 
 // https://vitejs.cn/config/
