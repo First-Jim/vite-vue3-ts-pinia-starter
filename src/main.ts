@@ -8,6 +8,7 @@ import 'tailwindcss/tailwind.css';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import '@/styles/index.scss';
+import { directives } from '@/utils/directives';
 
 async function start() {
 	const app = createApp(App);
@@ -22,6 +23,7 @@ async function start() {
 	app.use(ElementPlus, { i18n: i18n.global.t });
 
 	// 全局注册
+	directives(app);
 	registerIcons(app); // icons
 
 	app.mount('#app');

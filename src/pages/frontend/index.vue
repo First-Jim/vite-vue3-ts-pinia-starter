@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<!-- <Header /> -->
+		<Header />
 		<el-container class="container">
 			<el-main class="main">
 				<div class="main-container">
@@ -17,7 +17,7 @@
 				</div>
 			</el-main>
 		</el-container>
-		<!-- <Footer /> -->
+		<Footer />
 	</div>
 </template>
 
@@ -25,8 +25,8 @@
 import indexCover from '@/assets/index/index-cover.svg';
 import { useSiteConfig } from '@/stores/siteConfig';
 import { useMemberCenter } from '@/stores/memberCenter';
-// import Header from '@/layouts/frontend/components/header.vue';
-// import Footer from '@/layouts/frontend/components/footer.vue';
+import Header from '@/layouts/frontend/components/header.vue';
+import Footer from '@/layouts/frontend/components/footer.vue';
 import { togglePageDark } from '@/utils/useDark';
 
 const siteConfig = useSiteConfig();

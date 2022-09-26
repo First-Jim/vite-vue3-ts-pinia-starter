@@ -34,9 +34,13 @@ const viteConfig = ({ mode, command }: ConfigEnv): UserConfig => {
 			vue(),
 			svgBuilder('./src/assets/icons/'),
 			viteMockServe({
-				// default
 				mockPath: 'mock',
 				localEnabled: command === 'serve',
+				prodEnabled: true,
+				injectCode: ` import { setupProdMockServer } from './src/mock';
+        setupProdMockServer(); `,
+				watchFiles: true, // 监听文件内容变更
+				injectFile: resolve('src/main.ts'), // 在main.ts注册后需要在此处注入，否则可能报找不到setupProdMockServer的错误
 			}),
 		],
 		root: process.cwd(),
