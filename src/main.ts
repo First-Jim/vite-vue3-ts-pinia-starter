@@ -10,6 +10,9 @@ import 'element-plus/dist/index.css';
 import '@/styles/index.scss';
 import { directives } from '@/utils/directives';
 
+//引入持久化插件
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
 async function start() {
 	const app = createApp(App);
 
@@ -21,6 +24,9 @@ async function start() {
 	const i18n = await loadLang(app);
 
 	app.use(ElementPlus, { i18n: i18n.global.t });
+
+	//持久化
+	store.use(piniaPluginPersistedstate);
 
 	// 全局注册
 	directives(app);

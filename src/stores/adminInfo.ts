@@ -16,6 +16,7 @@ export const useAdminInfo = defineStore('adminInfo', {
 			super: false,
 		};
 	},
+
 	actions: {
 		dataFill(state: AdminInfo) {
 			this.$state = state;
@@ -34,7 +35,15 @@ export const useAdminInfo = defineStore('adminInfo', {
 			this.super = val;
 		},
 	},
+	// 持久化
 	persist: {
 		key: ADMIN_INFO,
+		storage: window.localStorage,
+		beforeRestore: (context) => {
+			console.log('load globalStore data start');
+		},
+		afterRestore: (context) => {
+			console.log('load globalStore data end');
+		},
 	},
 });
